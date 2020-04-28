@@ -236,7 +236,7 @@
           <span><i class='far fa-bell' style='font-size:18px;color:white'></i>Gestion Des Notifications</span>
         </a>
         <ul id="Notification-page" class="collapse" aria-labelledby="Notification-page" data-parent="#side-nav-accordion">
-          <li> <a href="../Notification/AjoutNotification.htmll">Ajouter Une Notification</a> </li>
+          <li> <a href="../Notification/AjoutNotification.html">Ajouter Une Notification</a> </li>
           <li> <a href="../Notification/ModifierNotification.html">Modifier Une Notification</a> </li>
           <li> <a href="../Notification/SupprimerNotification.html">SupprimmerUne Notification</a> </li>
           <li> <a href="../Notification/AfficherNotification.html"> Afficher les Notifications</a> </li>
@@ -253,10 +253,10 @@
           <span><i class='fas fa-donate' style='font-size:18px;color:white'></i>Gestion Des Promotions</span>
         </a>
         <ul id="Promotion-page" class="collapse" aria-labelledby="Promotion-page" data-parent="#side-nav-accordion">
-          <li> <a href="AjoutPromotion.php">Ajouter Une Promotions</a> </li>
-          <li> <a href="ModifierPromotion.php">Modifier Une Promotions</a> </li>
-          <li> <a href="SupprimerPromotion.php">Supprimmer Une Promotions</a> </li>
-          <li> <a href="AfficherPromotion.php"> Afficher les Promotions</a> </li>
+          <li> <a href="../Promotion/AjoutPromotion.php">Ajouter Une Promotions</a> </li>
+          <li> <a href="../Promotion/ModifierPromotion.php">Modifier Une Promotions</a> </li>
+          <li> <a href="../Promotion/SupprimerPromotion.php">Supprimmer Une Promotions</a> </li>
+          <li> <a href="../Promotion/AfficherPromotion.php"> Afficher les Promotions</a> </li>
 
         </ul>
       </li>
@@ -467,7 +467,7 @@
 
     </nav>
     <!-- body wrapper -->
-<?php
+    <?php
       require_once 'connection/dbconfig.php';
 
       include_once('connection/connectionz.php');
@@ -479,32 +479,57 @@
     $stmt->execute();
     while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 
-      $img = $row['img_pub'];
-      $pid = $row['pid'];
-      $pr = $row['pr'];
+            $img = $row['img_pub'];
+            $pid = $row['pid'];
+            $pr = $row['pr'];
+            $qt_dispo = $row['quantite'];
+            $name = $row['name'];
 
       echo '
-      <div class="item">
-      <button class="button">Prix '.$pr.' Dinar/KG</button><br>
-      <span><img src="'.$img.'"><span><br>
-    <form method="get" action="modify.php">
-    <p>ID du produit:</p>
-    <input type="text" name="pid" class="form-control" value="'.$pid.'" readonly>
-      <div class="col-md-12">
-        <label for="validationCustom12">Description</label>
-        <div class="input-group">
-          <textarea rows="5" name="Description" id="validationCustom12" class="form-control" required=""></textarea>
-        </div>
-      </div>
-      <div class="col-md-12">
+      <form method="post" action="modify.php" enctype="multipart/form-data">
+      <br><br>
+        <div class="col-xl-6 col-md-12">
+          <div class="ms-panel ms-panel-fh" style="width: 1000px ; margin-left: 120px;">
+          <br>
+          <center><br><br><div style="width:300px; height:300px;"><img src="'.$img.'"></div></center>
+            <div class="ms-panel-body">
+              <div class="form-row">
+                <div class="col-xl-12 col-md-12">
+                  <label for="validationCustom1">Identifiant:</label>
+                    <div class="input-group">
+                      <input type="text" name="pid" class="form-control" id="validationCustom1" value="'.$pid.'" readonly>
+                    </div>
+                </div>
 
-        <button class="btn btn-dark mr-2  ms-graph-metrics">Modifier</button>
-      </div>
-    </form>';
+                  <div class="col-md-12">
+                    <label for="validationCustom6">Description:</label>
+                    <div class="input-group">
+                      <textarea rows="4" name="Description" id="validationCustom6" class="form-control" required=""></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 ">
+                    <label for="validationCustom12">Upload Product Image</label>
+                    <div class="custom-file">
+
+                      <input type="file" name="fileToUpload" id="fileToUpload">
+                  </div>
+
+                  <div class="col-md-12">
+
+                    <button class="btn btn-dark mr-2  ms-graph-metrics">Vider</button>
+                    <button class="btn btn-primary " type="submit" name="upload">Modifier</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    ';
 
     } // While loop End
     //**
-?>
+  ?>
 
   <!-- Quick bar -->
   <aside id="ms-quick-bar" class="ms-quick-bar fixed ms-d-block-lg">

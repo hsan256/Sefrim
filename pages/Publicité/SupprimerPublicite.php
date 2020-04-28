@@ -471,23 +471,81 @@
       include_once('connection/connectionz.php');
       include_once('function/functionz.php');
 
+      $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
+        if ($page <= 0) $page = 1;
+
+        $per_page = 5; // Set how many records do you want to display per page.
+
+        $startpoint = ($page * $per_page) - $per_page;
+
+        $statement = "`product` ORDER BY `pid` ASC";
 
     //**
-    $stmt = $db_con->prepare("SELECT * FROM product where pub != 0");
-    $stmt->execute();
-    while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 
-      $img = $row['img_pub'];
-      $pid = $row['pid'];
-      $pr = $row['pr'];
+      echo '<br>
+      <div class="col-xl-12 col-md-12">
+          <div class="ms-panel">
+            <div class="ms-panel-header ms-panel-custom ">
 
-      echo '
-      <center>
-      <div class="item">
-      <button class="button">Prix '.$pr.' Dinar/KG</button><br>
-      <span><img src="'.$img.'"><span><br>
-        <span class="more"><a href="delete.php?pid='.$pid.'" >Supprimer</a></span>
-    </center>';
+              <div class="ms-heading">
+                <h6>Nos Produits</h6>
+                <p>Voici la liste des produits</p>
+              </div>
+            </div>
+            <div class="ms-panel-body">
+              <div class="table-responsive">
+                <table class="table table-hover thead-primary">
+                  <thead>
+                    <tr>
+                      <th>Nom du produit</th>
+                      <th>Disponibilité</th>
+                      <th>Date de création</th>
+                      <th>Prix</th>
+                      <th>Quantité</th>
+                      <th>CRUD</th>
+                    </tr>
+                  </thead>
+                  <tbody>';
+
+                  $stmt = $db_con->prepare("SELECT * FROM product where pub != 0 LIMIT {$startpoint} , {$per_page} ");
+                  $stmt->execute();
+                  while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+
+                    $img = $row['img_pub'];
+                    $pid = $row['pid'];
+                    $pr = $row['pr'];
+                    $qt_dispo = $row['quantite'];
+                    $name = $row['name'];
+                    $date = $row['cdate'];
+                  echo'
+                    <tr>
+                      <td class="ms-table-f-w"> <img src='.$img.' alt="people"> <a href="#">'.$name.' </a></td>';
+                      if ($qt_dispo == 0)
+                        echo '<td><span class="badge badge-danger">Repture de Stock</span></td>';
+                      else
+                        echo'<td><span class="badge badge-success">En Stock</span></td>';
+                    echo'
+                      <td>'.$date.'</td>
+                      <td>'.$pr.' Dinar/KG  </td>
+                      <td>'.$qt_dispo.'</td>
+                      <td> <a href="delete.php?pid='.$pid.'" ><button type="submit" name="upload">Supprimer</a></button></td>
+                    </tr>
+                    <div class="col-md-12">
+
+                    </div>
+                    ';
+                    }// While loop End
+                  echo'</tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        ';
+    //**
+    ?>
+
+    ';
 
     } // While loop End
     //**

@@ -98,8 +98,22 @@ textarea {
 
 
 	#nav{
-
+		padding: 70px 420px;
 		clear: both;
+	}
+
+	#Calculatrice{
+		padding: 0px 100px;
+		clear: both;
+	}
+	#imgpage2{
+		border: 1px solid #ddd;
+	  border-radius: 4px;
+	  padding: 5px;
+		width: 330px;
+		display: block;
+		margin-left: 30px;
+		margin-top: 30px;
 	}
 
 	#main{
@@ -304,7 +318,6 @@ textarea {
 		border: 1px solid #1f447f;
 		color: #fff;
 		text-decoration: none;
-
 
 	}
 
