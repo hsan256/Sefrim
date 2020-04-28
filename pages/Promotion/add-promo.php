@@ -3,13 +3,20 @@
 
   include_once('connection/connectionz.php');
 
-  if(isset($_GET['pid']) && isset($_GET['tauxpromo']))
+  if(isset($_POST['pid']) && isset($_POST['pr']) && isset($_POST['tauxpromo'])
+  && isset($_POST['Quantite']) && isset($_POST['quantite_dispo']) && isset($_POST['Description']))
   {
-    $id =  $_GET['pid'];
+    $id =  $_POST['pid'];
 
-    $tauxpromo = $_GET['tauxpromo'];
+    $oldprice = $_POST['pr'];
 
-    $oldprice = $_GET['pr'];
+    $tauxpromo = $_POST['tauxpromo'];
+
+    $qt = $_POST['Quantite'];
+
+    $qt_dispo = $_POST['quantite_dispo'];
+
+    $des = $_POST['Description'];
 
     $newprice = $oldprice - (($oldprice * $tauxpromo) / 100);
 
@@ -23,7 +30,14 @@
               </div>';
     }
     else{
-      $stmt=$db_con->prepare("UPDATE `product` SET `pr` = '$newprice', `tauxpromo` = '$tauxpromo' , `oldpr` = '$oldprice' WHERE pid = '$id'");
+      $stmt=$db_con->prepare("UPDATE `product` SET
+        `pr` = '$newprice' ,
+        `tauxpromo` = '$tauxpromo' ,
+        `oldpr` = '$oldprice' ,
+        `quantité_promo` = '$qt' ,
+        `quantite` = '$qt_dispo' ,
+        `des` = '$des'
+        WHERE pid = '$id'");
       $stmt->execute(array(':id'=>$id));
 
         echo '

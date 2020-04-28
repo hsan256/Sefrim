@@ -482,40 +482,74 @@
       $img = $row['img'];
       $pid = $row['pid'];
       $pr = $row['pr'];
+      $qt_dispo = $row['quantite'];
+      $name = $row['name'];
 
       echo '
-      <div id ="imgpage2"><img src="'.$img.'"></div><br>
-      <div class="item">
-      <form method="get" action="add-promo.php">
-      <table>
-        <tr>
-            <td>ID du produit:</td>
-            <td><input type="text" name="pid" class="form-control" value="'.$pid.'" readonly>
-        </tr>
-        <tr>
-            <td>Prix courant:</td>
-            <td><input type="text" name="pr" class="form-control" value="'.$pr.'" readonly>
-        </tr>
-        <tr>
-            <td>Taux de promotion:</td>
-            <td><input type="text" name="tauxpromo" class="form-control" placeholder="Promotion %">
-        </tr>
+      <form method="post" action="add-promo.php" enctype="multipart/form-data">
+      <br><br>
+        <div class="col-xl-6 col-md-12">
+          <div class="ms-panel ms-panel-fh" style="width: 1000px ; margin-left: 120px;">
+          <br>
+          <div id ="imgpage2" style="margin-left: 310px;"><img src="'.$img.'"></div><br>
+            <div class="ms-panel-body">
+              <div class="form-row">
+                <div class="col-xl-12 col-md-12">
+                  <label for="validationCustom1">Identifiant:</label>
+                    <div class="input-group">
+                      <input type="text" name="pid" class="form-control" id="validationCustom1" value="'.$pid.'" readonly>
+                    </div>
+                </div>
 
-        <tr>
-          <td></td>
-          <td>
-        	   <button type="submit" class="button"> Ajouter Promotion </button>
-          </td>
-        </tr>
-      </table>
+                <div class="col-xl-12 col-md-12">
+                    <label for="validationCustom2">Prix '.$name.'</label>
+                  <div class="input-group">
+                    <input type="text" name="pr" class="form-control" id="validationCustom2" value="'.$pr.'" readonly>
+                  </div>
+                </div>
+
+                  <div class="col-xl-4 col-md-12">
+                    <label for="validationCustom3" data-toggle="tooltip" data-placement="left" title="Doit être entre 0% et 100%">Taux Promotion:</label>
+                    <div class="input-group">
+                      <input type="text" name="tauxpromo" class="form-control" id="validationCustom3" placeholder="Promotion %">
+                    </div>
+                  </div>
+
+                  <div class="col-xl-4 col-md-12">
+                    <label for="validationCustom4" data-toggle="tooltip" data-placement="left" title="">Quantité:</label>
+                    <div class="input-group">
+                      <input type="text" name="Quantite" class="form-control" id="validationCustom4" placeholder="Saisir la Quantité" required="">
+                      <div class="invalid-feedback">
+                        Quantite !
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xl-4 col-md-12">
+                    <label for="validationCustom5">Quantite disponible:</label>
+                    <div class="input-group">
+                      <input type="text" name="quantite_dispo" class="form-control" id="validationCustom5" value="'.$qt_dispo.' Kg" readonly>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-12">
+                    <label for="validationCustom6">Description:</label>
+                    <div class="input-group">
+                      <textarea rows="4" name="Description" id="validationCustom6" class="form-control" required=""></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+
+                    <button class="btn btn-dark mr-2  ms-graph-metrics">Vider</button>
+                    <button class="btn btn-primary " type="submit" name="upload">Ajouter</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
       </form>
-
-            <span id="Calculatrice">
-              <a href="Calculatrice/index.html">
-                <button class="btn btn-dark mr-2  ms-graph-metrics">Calculatrice
-                  </button>
-                </a>
-            </span>
       ';
 
     } // While loop End
