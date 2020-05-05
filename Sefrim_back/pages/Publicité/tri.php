@@ -474,7 +474,7 @@
       $page = isset($_GET['page']) ? $_GET['page'] : 1;
       $start = ($page - 1) * $limit;
 
-      $result = $conDB->query("SELECT * FROM product where pub != 0 LIMIT $start, $limit");
+      $result = $conDB->query("SELECT * FROM product where pub != 0 order by name asc LIMIT $start, $limit");
       $products = $result->fetch_all(MYSQLI_ASSOC);
 
       $result1 = $conDB->query("SELECT COUNT(*) as `id1` FROM product where pub != 0");

@@ -474,10 +474,10 @@
       $page = isset($_GET['page']) ? $_GET['page'] : 1;
       $start = ($page - 1) * $limit;
 
-      $result = $conDB->query("SELECT * FROM product where pub != 0 LIMIT $start, $limit");
+      $result = $conDB->query("SELECT * FROM product where tauxpromo != 0 order by quantite asc LIMIT $start, $limit");
       $products = $result->fetch_all(MYSQLI_ASSOC);
 
-      $result1 = $conDB->query("SELECT COUNT(*) as `id1` FROM product where pub != 0");
+      $result1 = $conDB->query("SELECT COUNT(*) as `id1` FROM product where tauxpromo != 0");
       $prodCount = $result1->fetch_all(MYSQLI_ASSOC);
       $total = $prodCount[0]['id1'];
       $pages = ceil( $total / $limit );
@@ -520,7 +520,7 @@
 
 <?php foreach($products as $product) :  ?>
   <tr>
-    <td class="ms-table-f-w"> <img src = <?=$product['img_pub'];?> alt="people"> <a href="#"><?=$product['name'];?> </a></td>
+    <td class="ms-table-f-w"> <img src = <?=$product['img'];?> alt="people"> <a href="#"><?=$product['name'];?> </a></td>
     <?php
     if ($product['quantite'] == 0)
       echo '<td><span class="badge badge-danger">Repture de Stock</span></td>';

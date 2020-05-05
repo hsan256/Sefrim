@@ -477,10 +477,10 @@
       $page = isset($_GET['page']) ? $_GET['page'] : 1;
       $start = ($page - 1) * $limit;
 
-      $result = $conDB->query("SELECT * FROM product LIMIT $start, $limit");
+      $result = $conDB->query("SELECT * FROM product where tauxpromo != 0 LIMIT $start, $limit");
       $products = $result->fetch_all(MYSQLI_ASSOC);
 
-      $result1 = $conDB->query("SELECT COUNT(*) as `id` FROM product");
+      $result1 = $conDB->query("SELECT COUNT(*) as `id` FROM product where tauxpromo != 0");
       $prodCount = $result1->fetch_all(MYSQLI_ASSOC);
       $total = $prodCount[0]['id'];
       $pages = ceil( $total / $limit );
@@ -499,6 +499,12 @@
                 <h6>Nos Produits</h6>
                 <p>Voici la liste des produits</p>
               </div>
+              <span style="margin-left: 850px">
+                <a href="stat.php"><button class="btn btn-primary mr-2 ms-custom-btn">Statistique</button></a>
+              </span>
+              <span>
+                <a href="tri.php"><button class="btn btn-primary mr-2 ms-custom-btn">Trier</button></a>
+              </span>
             </div>
             <div class="ms-panel-body">
               <div class="table-responsive">
@@ -555,8 +561,6 @@ echo'
 </div>';
 
 ?>
-
-
 
 
   <!-- Quick bar -->

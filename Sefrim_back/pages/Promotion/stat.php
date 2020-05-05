@@ -1,3 +1,13 @@
+<?php
+
+  $dbhandle = new mysqli('localhost','root','','mydb');
+  echo $dbhandle->connect_error;
+
+  $query = "SELECT * FROM product";
+  $res = $dbhandle->query($query);
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -251,10 +261,11 @@
           <span><i class='fas fa-donate' style='font-size:18px;color:white'></i>Gestion Des Promotions</span>
         </a>
         <ul id="Promotion-page" class="collapse" aria-labelledby="Promotion-page" data-parent="#side-nav-accordion">
-          <li> <a href="../Promotion/AjoutPromotion.php">Ajouter Une Promotions</a> </li>
-          <li> <a href="../Promotion/ModifierPromotion.php">Modifier Une Promotions</a> </li>
-          <li> <a href="../Promotion/SupprimerPromotion.php">Supprimmer Une Promotions</a> </li>
-          <li> <a href="../Promotion/AfficherPromotion.php"> Afficher les Promotions</a> </li>
+          <li> <a href="AjoutPromotion.php">Ajouter Une Promotions</a> </li>
+          <li> <a href="ModifierPromotion.php">Modifier Une Promotions</a> </li>
+          <li> <a href="SupprimerPromotion.php">Supprimmer Une Promotions</a> </li>
+          <li> <a href="AfficherPromotion.php"> Afficher les Promotions</a> </li>
+
 
         </ul>
       </li>
@@ -266,10 +277,10 @@
           <span><i class="fas fa-cannabis"></i>Gestion Des Publicités </span>
         </a>
         <ul id="Publicité-page" class="collapse" aria-labelledby="Publicité-page" data-parent="#side-nav-accordion">
-          <li> <a href="AjoutPublicite.php">Ajouter Une Publicité</a> </li>
-          <li> <a href="ModifierPublicite.php">Modifier Une Publicité</a> </li>
-          <li> <a href="SupprimerPublicite.php">Supprimmer Une Publicité</a> </li>
-          <li> <a href="AfficherPublicite.php"> Afficher les Publicités</a> </li>
+          <li> <a href="../Publicité/AjoutPublicite.php">Ajouter Une Publicité</a> </li>
+          <li> <a href="../Publicité/ModifierPublicite.php">Modifier Une Publicité</a> </li>
+          <li> <a href="../Publicité/SupprimerPublicite.php">Supprimmer Une Publicité</a> </li>
+          <li> <a href="../Publicité/AfficherPublicite.php"> Afficher les Publicités</a> </li>
 
         </ul>
       </li>
@@ -465,99 +476,31 @@
 
     </nav>
     <!-- body wrapper -->
-    <?php
-      require_once 'connection/dbconfig.php';
 
-      include_once('connection/connectionz.php');
+    <div class="ms-panel">
+    	<div class="ms-panel-header">
+    		<h6>Bar Chart</h6>
+    	</div>
+    	<div class="ms-panel-body">
+    		<div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+    			<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+    				<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+    			</div>
+    			<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+    				<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+    			</div>
+    		</div>
+        <!--Display chart here:-->
+    		<center>
+    			<div id="chart_div"></div>
+    		</center>
+    	</div>
+    </div>
 
-      $limit = isset($_POST["limit-records"]) ? $_POST["limit-records"] : 5;
-      $page = isset($_GET['page']) ? $_GET['page'] : 1;
-      $start = ($page - 1) * $limit;
 
-      $result = $conDB->query("SELECT * FROM product where pub != 0 LIMIT $start, $limit");
-      $products = $result->fetch_all(MYSQLI_ASSOC);
 
-      $result1 = $conDB->query("SELECT COUNT(*) as `id1` FROM product where pub != 0");
-      $prodCount = $result1->fetch_all(MYSQLI_ASSOC);
-      $total = $prodCount[0]['id1'];
-      $pages = ceil( $total / $limit );
 
-      $Previous = $page - 1;
-      $Next = $page + 1;
 
-     ?>
-
-     <br>
-      <div class="col-xl-12 col-md-12">
-          <div class="ms-panel">
-            <div class="ms-panel-header ms-panel-custom ">
-
-              <div class="ms-heading">
-                <h6>Nos Produits</h6>
-                <p>Voici la liste des produits</p>
-              </div>
-              <span style="margin-left: 850px">
-                <a href="stat.php"><button class="btn btn-primary mr-2 ms-custom-btn">Statistique</button></a>
-              </span>
-              <span>
-                <a href="tri.php"><button class="btn btn-primary mr-2 ms-custom-btn">Trier</button></a>
-              </span>
-            </div>
-            <div class="ms-panel-body">
-              <div class="table-responsive">
-                <table class="table table-hover thead-primary">
-                  <thead>
-                    <tr>
-                      <th>Nom du produit</th>
-                      <th>Disponibilité</th>
-                      <th>Date de création</th>
-                      <th>Prix</th>
-                      <th>Quantité</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-<?php foreach($products as $product) :  ?>
-  <tr>
-    <td class="ms-table-f-w"> <img src = <?=$product['img_pub'];?> alt="people"> <a href="#"><?=$product['name'];?> </a></td>
-    <?php
-    if ($product['quantite'] == 0)
-      echo '<td><span class="badge badge-danger">Repture de Stock</span></td>';
-    else
-      echo'<td><span class="badge badge-success">En Stock</span></td>';
-      echo'
-        <td>'.$product['cdate'].'</td>
-        <td>'.$product['pr'].' Dinar/KG</td>
-        <td>'.$product['quantite'].'</td>
-        <td></td>
-        ';
-    ?>
-  </tr>
-<?php endforeach; ?>
-
-<?php echo'</tbody>
-          </table>
-         </div>
-        </div>
-       </div>
-      </div>';?>
-
-<?php
-echo'
-<div class="card-body">
-    <nav>
-        <ul class="pagination d-flex justify-content-center flex-wrap pagination-flat pagination-success">
-            <li class="page-item"><a class="page-link" href="AfficherPublicite.php?page='.$Previous.'" data-abc="true"><i class="fa fa-angle-left"></i></a></li>';
-            for($i = 1; $i<= $pages; $i++) :
-                echo'<li class="page-item active"><a href="AfficherPublicite.php?page='.$i.'" class="page-link" data-abc="true">'.$i.'</a></li>';
-            endfor;
-            echo'<li class="page-item"><a class="page-link" href="AfficherPublicite.php?page='.$Next.'" data-abc="true"><i class="fa fa-angle-right"></i></a></li>
-        </ul>
-    </nav>
-</div>';
-
-?>
   <!-- Quick bar -->
   <aside id="ms-quick-bar" class="ms-quick-bar fixed ms-d-block-lg">
 
@@ -1244,7 +1187,43 @@ echo'
 
   <!-- Settings -->
   <script src="../../assets/js/settings.js"></script>
-</body>
+  <!-- execute record max -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Topping');
+      data.addColumn('number', 'Slices');
+      data.addRows([
+        <?php while ($row = $res->fetch_assoc()){
+          echo"['".$row['name']."',".$row['tauxpromo']."],";
+        }
+
+         ?>
+      ]);
+
+      // Set chart options
+      var options = {'title':'Top produits en promotions',
+                     'width':1200,
+                     'height':600};
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
 
 
 <!-- Mirrored from slidesigma.com/themes/html/greendash/pages/product/product-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Apr 2020 10:13:48 GMT -->
