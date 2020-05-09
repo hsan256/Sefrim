@@ -174,4 +174,67 @@ function display_list_promotions($max_promo,$type){
   }
 
 }
+
+function display_pub(){
+  global $ConnectingDB;
+  $sql = "SELECT * FROM product where pub != 0 ORDER BY pr ASC";
+  $Execute = $ConnectingDB->query($sql);
+
+  while($DataRows=$Execute->fetch(PDO::FETCH_ASSOC)){
+
+    $img = $DataRows['img'];
+    $pid = $DataRows['pid'];
+    $pr = $DataRows['pr'];
+    $oldprice = $DataRows['oldpr'];
+    $qt_dispo = $DataRows['quantite'];
+    $name = $DataRows['name'];
+    $date = $DataRows['cdate'];
+    $tauxpromo = $DataRows['tauxpromo'];
+    $des = $DataRows['des'];
+
+    echo'
+    <div class="item">
+                      <div class="item-inner">
+                        <div class="item-img">
+                          <div class="item-img-info"><a href="product-detail.html" title="Retis lapen casen" class="product-image"><img src="images/'.$img.'" alt="Retis lapen casen"></a>
+                            <div class="new-label new-top-left">Pub</div>
+                            <div class="item-box-hover">
+                              <div class="box-inner">
+                                <div class="product-detail-bnt"><a class="button detail-bnt"><span>Quick View</span></a></div>
+                                <div class="actions"><span class="add-to-links"><a href="#" class="link-wishlist" title="Add to Wishlist"><span>Add to Wishlist</span></a> <a href="#" class="link-compare add_to_compare" title="Add to Compare"><span>Add to Compare</span></a></span> </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item-info">
+                          <div class="info-inner">
+                            <div class="item-title"><a href="product-detail.html" title="Retis lapen casen">'.$name .'</a> </div>
+                            <div class="item-content">
+                              <div class="rating">
+                                <div class="ratings">
+                                  <div class="rating-box">
+                                    <div class="rating" style="width:80%"></div>
+                                  </div>
+                                  <p class="rating-links"><a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                </div>
+                              </div>
+                              <div class="item-price">
+                                <div class="price-box"><span class="regular-price" ><span class="price">'.$pr.' Dinars/kg</span> </span> </div>
+                              </div>
+            <div class="add_cart">
+                                  <button class="button btn-cart" type="button"><span>Add to Cart</span></button>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+    ';
+
+  }
+}
+
+
 ?>

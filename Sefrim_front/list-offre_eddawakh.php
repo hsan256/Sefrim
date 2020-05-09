@@ -633,26 +633,86 @@ Confirm_Login();
               <div id="sort-by">
                 <label class="left">Sort By: </label>
                 <ul>
-                  <li><a href="list-offre_eddawakh.php?type=pr">Prix<span class="right-arrow"></span></a>
-                      <ul>
-                        <li><a href="list-offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
-                        <li><a href="list-offre_eddawakh.php?type=pr">Prix</a></li>
-                        <li><a href="list-offre_eddawakh.php?type=quantite">Quantité</a></li>
-                      </ul>
-                    </li>
+                  <?php
+                  //display tri type
+                  if (!isset($_GET['type']))
+                    echo'
+                      <li><a href="list-offre_eddawakh.php?type=pr">Prix<span class="right-arrow"></span></a>
+                          <ul>
+                            <li><a href="Offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                            <li><a href="Offre_eddawakh.php?type=pr">Prix</a></li>
+                            <li><a href="Offre_eddawakh.php?type=quantite">Quantité</a></li>
+                          </ul>
+                        </li>
+                    </ul>';
+                  elseif ($_GET['type']=='tauxpromo')
+                  echo'
+                    <li><a href="list-offre_eddawakh.php?type=tauxpromo">% Promo<span class="right-arrow"></span></a>
+                        <ul>
+                          <li><a href="list-offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                          <li><a href="list-offre_eddawakh.php?type=pr">Prix</a></li>
+                          <li><a href="list-offre_eddawakh.php?type=quantite">Quantité</a></li>
+                        </ul>
+                      </li>
+                  </ul>';
+                  elseif ($_GET['type']=='pr')
+                    echo'
+                      <li><a href="list-offre_eddawakh.php?type=pr">Prix<span class="right-arrow"></span></a>
+                          <ul>
+                            <li><a href="list-offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                            <li><a href="list-offre_eddawakh.php?type=pr">Prix</a></li>
+                            <li><a href="list-offre_eddawakh.php?type=quantite">Quantité</a></li>
+                          </ul>
+                        </li>
+                    </ul>';
+
+                  elseif ($_GET['type']=='quantite')
+                    echo'
+                      <li><a href="list-offre_eddawakh.php?type=quantite">Quantité<span class="right-arrow"></span></a>
+                          <ul>
+                            <li><a href="list-offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                            <li><a href="list-offre_eddawakh.php?type=pr">Prix</a></li>
+                            <li><a href="list-offre_eddawakh.php?type=quantite">Quantité</a></li>
+                          </ul>
+                        </li>
+                    </ul>';
+                  ?>
                 </ul>
                 <a class="button-asc left" href="#" title="Set Descending Direction"><span class="top_arrow"></span></a> </div>
             <div class="pager">
               <div id="limiter">
                 <label>View: </label>
                 <ul>
-                  <li><a href="list-offre_eddawakh.php?max_promo=5">5<span class="right-arrow"></span></a>
-                    <ul>
-                        <li><a href="list-offre_eddawakh.php?max_promo=10">10</li>
-                        <li><a href="list-list-offre_eddawakh.php?max_promo=15">15</a></li>
-                        <li><a href="list-list-offre_eddawakh.php?max_promo=20">20</a></li>
-                    </ul>
-                  </li>
+                  <?php
+                  if(!isset($_GET['max_promo'])) {
+                    echo'<li><a href="Offre_eddawakh.php?max_promo=5">5<span class="right-arrow"></span></a>
+                      <ul>
+                          <li><a href="Offre_eddawakh.php?max_promo=10">10</li>
+                          <li><a href="Offre_eddawakh.php?max_promo=15">15</a></li>
+                          <li><a href="Offre_eddawakh.php?max_promo=20">20</a></li>
+                      </ul>
+                    </li>';
+                  }
+                  elseif($_GET['max_promo'] == 5){
+                      echo'<li><a href="Offre_eddawakh.php?max_promo='.$_GET['max_promo'].'">'.$_GET['max_promo'].'<span class="right-arrow"></span></a>
+                        <ul>
+                            <li><a href="Offre_eddawakh.php?max_promo=10">10</li>
+                            <li><a href="Offre_eddawakh.php?max_promo=15">15</a></li>
+                            <li><a href="Offre_eddawakh.php?max_promo=20">20</a></li>
+                        </ul>
+                      </li>';
+                    }
+                    elseif($_GET['max_promo'] > 5) {
+                      echo'<li><a href="Offre_eddawakh.php?max_promo='.$_GET['max_promo'].'">'.$_GET['max_promo'].'<span class="right-arrow"></span></a>
+                        <ul>
+                            <li><a href="Offre_eddawakh.php?max_promo=5">5</li>
+                            <li><a href="Offre_eddawakh.php?max_promo=15">15</a></li>
+                            <li><a href="Offre_eddawakh.php?max_promo=20">20</a></li>
+                        </ul>
+                      </li>';
+                    }
+
+                   ?>
                 </ul>
                 </div>
               <div class="pages">

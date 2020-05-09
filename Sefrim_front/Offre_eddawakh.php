@@ -7,6 +7,29 @@ $_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"];
 Confirm_Login();
 ?>
 
+<?php
+  $limit = isset($_POST['limit-records']) ? $_POST['limit-records'] : 3;
+  $page = isset($_GET['page']) ? $_GET['page'] : 1;
+  $start = ($page - 1) * $limit;
+
+if (isset($_GET['type'])) {
+  $type = $_GET['type'];
+  $result = $link->query("SELECT * FROM product where tauxpromo != 0 order by $type LIMIT $start, $limit");
+  $products = $result->fetch_all(MYSQLI_ASSOC);
+}
+else{
+  $result = $link->query("SELECT * FROM product where tauxpromo != 0 LIMIT $start, $limit");
+  $products = $result->fetch_all(MYSQLI_ASSOC);
+}
+  $result1 = $link->query("SELECT COUNT(*) as `id` FROM product where tauxpromo != 0");
+  $prodCount = $result1->fetch_all(MYSQLI_ASSOC);
+  $total = $prodCount[0]['id'];
+  $pages = ceil( $total / $limit );
+
+  $Previous = $page - 1;
+  $Next = $page + 1;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -623,63 +646,135 @@ Confirm_Login();
             </div>
             <div id="sort-by">
               <label class="left">Sort By: </label>
-              <ul>
-                <li><a href="Offre_eddawakh.php?type=pr">Prix<span class="right-arrow"></span></a>
+              <ul><?php
+              //display tri type
+              if (!isset($_GET['type']))
+                echo'
+                  <li><a href="Offre_eddawakh.php?type=pr">Prix<span class="right-arrow"></span></a>
+                      <ul>
+                        <li><a href="Offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                        <li><a href="Offre_eddawakh.php?type=pr">Prix</a></li>
+                        <li><a href="Offre_eddawakh.php?type=quantite">Quantité</a></li>
+                      </ul>
+                    </li>
+                </ul>';
+              elseif ($_GET['type']=='tauxpromo')
+              echo'
+                <li><a href="Offre_eddawakh.php?type=tauxpromo">% Promo<span class="right-arrow"></span></a>
                     <ul>
                       <li><a href="Offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
                       <li><a href="Offre_eddawakh.php?type=pr">Prix</a></li>
                       <li><a href="Offre_eddawakh.php?type=quantite">Quantité</a></li>
                     </ul>
                   </li>
-              </ul>
+              </ul>';
+              elseif ($_GET['type']=='pr') {
+                echo'
+                  <li><a href="Offre_eddawakh.php?type=pr">Prix<span class="right-arrow"></span></a>
+                      <ul>
+                        <li><a href="Offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                        <li><a href="Offre_eddawakh.php?type=pr">Prix</a></li>
+                        <li><a href="Offre_eddawakh.php?type=quantite">Quantité</a></li>
+                      </ul>
+                    </li>
+                </ul>';
+              }
+              elseif ($_GET['type']=='quantite') {
+                echo'
+                  <li><a href="Offre_eddawakh.php?type=quantite">Quantité<span class="right-arrow"></span></a>
+                      <ul>
+                        <li><a href="Offre_eddawakh.php?type=tauxpromo">% Promo</a></li>
+                        <li><a href="Offre_eddawakh.php?type=pr">Prix</a></li>
+                        <li><a href="Offre_eddawakh.php?type=quantite">Quantité</a></li>
+                      </ul>
+                    </li>
+                </ul>';
+              }
+
+              ?>
               <a class="button-asc left" href="#" title="Set Descending Direction"><span class="top_arrow"></span></a> </div>
             <div class="pager">
-              <div id="limiter">
+              <div id="limiter" >
 
                 <label>View: </label>
                 <ul>
-                  <li><a href="Offre_eddawakh.php?max_promo=5">5<span class="right-arrow"></span></a>
-                    <ul>
-                        <li><a href="Offre_eddawakh.php?max_promo=10">10</li>
-                        <li><a href="Offre_eddawakh.php?max_promo=15">15</a></li>
-                        <li><a href="Offre_eddawakh.php?max_promo=20">20</a></li>
-                    </ul>
-                  </li>
+
+                  <div class="text-center" class="col-md-2">
+                    <form method="post">
+                        <select name="limit-records" id="limit-records">
+                          <option disabled="disabled" selected="selected">---Limit Records---</option>
+                          <?php foreach([3,6,9,12,15] as $limit): ?>
+                            <option <?php if( isset($_POST["limit-records"]) && $_POST["limit-records"] == $limit) echo "selected" ?> value="<?= $limit; ?>"><?= $limit; ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </form>
+                    </div>
+
                 </ul>
-              </div>
+                </div>
+            <!--pagination-->
               <div class="pages">
                 <label>Page:</label>
-                <ul class="pagination">
-                  <li><a href="#">&laquo;</a></li>
-                  <li class="active"><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li><a href="#">&raquo;</a></li>
-                </ul>
+                  <ul class="pagination">
+                    <li><a href="Offre_eddawakh.php?page=<?=$Previous;?>">&laquo;</a></li>
+                    <?php
+                    for($i = 1; $i<= $pages; $i++) :
+                        echo'<li class=""><a href="Offre_eddawakh.php?page='.$i.'">'.$i.'</a></li></a></li>';
+                    endfor; ?>
+                    <li><a href="Offre_eddawakh.php?page=<?=$Next;?>">&raquo;</a></li>
+                  </ul>
               </div>
+            <!--end pagination-->
             </div>
           </div>
           <div class="category-products">
             <ul class="products-grid">
-              <?php
-              if (isset($_GET['max_promo']) && !isset($_GET['type'])){
-                $max_promo=$_GET['max_promo'];
-                $type = 'pr';
-                display_all_promotions($max_promo,$type);
-              }
-              else if (isset($_GET['type']) && !isset($_GET['max_promo'])){
-                $max_promo = 3;
-                $type = $_GET['type'];
-                display_all_promotions($max_promo,$type);
-              }
-              else {
-                $max_promo = 3;
-                $type = 'pr';
-                display_all_promotions($max_promo,$type);
-              }
-              ?>
+
+                 <?php foreach($products as $product) :  ?>
+                 <?php
+
+
+                 echo'
+                 <li class="item col-lg-4 col-md-3 col-sm-4 col-xs-6">
+                   <div class="item-inner">
+                     <div class="item-img">
+                       <div class="item-img-info"><a href="product-detail-promo.html" title="Retis lapen casen" class="product-image"><img src="images/'.$product['img'].'" alt="Retis lapen casen"></a>
+                         <div class="sale-label sale-top-right">Sale</div>
+                           <div class="item-box-hover">
+                             <div class="box-inner">
+                               <div class="product-detail-bnt"><a class="button detail-bnt" type="button"><span>Quick View</span></a></div>
+                                 <div class="actions"><span class="add-to-links"><a href="#" class="link-wishlist" title="Add to Wishlist"><span>Add to Wishlist</span></a> <a href="#" class="link-compare add_to_compare" title="Add to Compare"><span>Add to Compare</span></a></span> </div>
+
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                         <div class="item-info">
+                           <div class="info-inner">
+                             <div class="item-title"><a href="product-detail-promo.html" title="Retis lapen casen">'.$product['name'].' '.$product['tauxpromo'].'% OFF</a> </div>
+                               <div class="item-content">
+                                 <div class="rating">
+                                   <div class="ratings">
+                                     <div class="rating-box">
+                                       <div class="rating" style="width:80%"></div>
+                                     </div>
+                                     <p class="rating-links"><a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                   </div>
+                                 </div>
+                                 <div class="item-price">
+                                   <div class="price-box"><span class="regular-price" id="product-price-1"><span class="price">'.$product['pr'].' Dinars/KG</span> </span> </div>
+                                 </div>
+                                 <div class="add_cart">
+                                   <button class="button btn-cart" type="button"><span>Add to Cart</span></button>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+
+                       </li>
+                 ';                  ?>
+                 <?php endforeach;?>
             </ul>
           </div>
         </article>
@@ -1404,8 +1499,15 @@ Confirm_Login();
 <script type="text/javascript" src="js/jquery.flexslider.js"></script>
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-menu.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#limit-records").change(function(){
+			$('form').submit();
+		})
+	})
+</script>
 </body>
 
 <!-- Mirrored from themesground.com/flavours/version1/grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Apr 2020 11:56:18 GMT -->

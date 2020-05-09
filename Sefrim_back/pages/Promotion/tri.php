@@ -266,10 +266,10 @@
           <span><i class="fas fa-cannabis"></i>Gestion Des Publicités </span>
         </a>
         <ul id="Publicité-page" class="collapse" aria-labelledby="Publicité-page" data-parent="#side-nav-accordion">
-          <li> <a href="AjoutPublicite.php">Ajouter Une Publicité</a> </li>
-          <li> <a href="ModifierPublicite.php">Modifier Une Publicité</a> </li>
-          <li> <a href="SupprimerPublicite.php">Supprimmer Une Publicité</a> </li>
-          <li> <a href="AfficherPublicite.php"> Afficher les Publicités</a> </li>
+          <li> <a href="../Publicité/AjoutPublicite.php">Ajouter Une Publicité</a> </li>
+          <li> <a href="../Publicité/ModifierPublicite.php">Modifier Une Publicité</a> </li>
+          <li> <a href="../Publicité/SupprimerPublicite.php">Supprimmer Une Publicité</a> </li>
+          <li> <a href="../Publicité/AfficherPublicite.php"> Afficher les Publicités</a> </li>
 
         </ul>
       </li>
