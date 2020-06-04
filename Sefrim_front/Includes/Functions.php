@@ -4,6 +4,7 @@ function Redirect_to($New_Location){
   header("Location:".$New_Location);
   exit;
 }
+
 function CheckUserNameExistsOrNot($UserName){
   global $ConnectingDB;
   $sql    = "SELECT user_name FROM users WHERE user_name=:userName";
@@ -17,6 +18,7 @@ function CheckUserNameExistsOrNot($UserName){
     return false;
   }
 }
+
 function Login_Attempt($UserName,$Password){
   global $ConnectingDB;
   $sql = "SELECT * FROM users WHERE user_name=:userName AND user_pass=:passWord LIMIT 1";
@@ -31,6 +33,7 @@ function Login_Attempt($UserName,$Password){
     return null;
   }
 }
+
 function Confirm_Login(){
 if (isset($_SESSION["UserId"])) {
   return true;
@@ -196,7 +199,7 @@ function display_pub(){
     <div class="item">
                       <div class="item-inner">
                         <div class="item-img">
-                          <div class="item-img-info"><a href="product-detail.html" title="Retis lapen casen" class="product-image"><img src="images/'.$img.'" alt="Retis lapen casen"></a>
+                          <div class="item-img-info"><a href="product-detail-pub.php?view=1&source='.$pid.'" title="Retis lapen casen" class="product-image"><img src="images/'.$img.'" alt="Retis lapen casen"></a>
                             <div class="new-label new-top-left">Pub</div>
                             <div class="item-box-hover">
                               <div class="box-inner">

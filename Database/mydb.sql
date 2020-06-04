@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2020 at 04:13 PM
+-- Generation Time: Jun 04, 2020 at 12:57 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -77,22 +77,23 @@ CREATE TABLE `product` (
   `img_pub` varchar(25) NOT NULL,
   `oldpr` int(10) NOT NULL,
   `quantite` int(10) NOT NULL,
-  `quantite_promo` int(10) NOT NULL
+  `quantite_promo` int(10) NOT NULL,
+  `view_pub` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`pid`, `img`, `name`, `des`, `pr`, `cdate`, `tauxpromo`, `pub`, `img_pub`, `oldpr`, `quantite`, `quantite_promo`) VALUES
-(5, 'img/5.jpg', 'Ananas', 'Fruit\r\n', '5.6', '2020-4-16', 20, 1, 'img_pub/5.jpg', 7, 5, 5),
-(15, 'img/15.jpg', 'Figue', 'Fruit', '2', '2020-4-16', 50, 1, 'img_pub/15.jpg', 4, 7, 5),
-(10, 'img/10.jpg', 'Onion', 'Légume', '1.000', '2020-4-16', 0, 1, 'img_pub/10.jpg', 0, 5, 0),
-(18, 'img/18.png', 'Fraise', 'Fruit', '1.8', '2020-4-16', 10, 0, 'img_pub/18.png', 2, 5, 5),
-(12, 'img/12.jpg', 'Pastèque', 'Fruit', '0.450', '2020-4-16', 0, 0, 'img_pub/12.jpg', 0, 0, 0),
-(11, 'img/11.jpg', 'Citron', 'Fruit', '3.500', '2020-4-16', 0, 0, 'img_pub/11.jpg', 0, 5, 0),
-(25, 'img/25.jpg', 'Banane', 'Fruit', '3.900', '2020-4-16', 0, 0, 'img_pub/25.jpg', 0, 0, 0),
-(26, 'img/26.jpg', 'Tomate', 'Fruit', '1.000', '2020-4-16', 0, 1, 'img_pub/26.jpg', 0, 0, 0);
+INSERT INTO `product` (`pid`, `img`, `name`, `des`, `pr`, `cdate`, `tauxpromo`, `pub`, `img_pub`, `oldpr`, `quantite`, `quantite_promo`, `view_pub`) VALUES
+(5, 'img/5.jpg', 'Ananas', 'Fruit\r\n', '5.6', '2020-4-16', 20, 1, 'img_pub/5.jpg', 7, 5, 5, 6),
+(15, 'img/15.jpg', 'Figue', 'Fruit', '2', '2020-4-16', 50, 1, 'img_pub/15.jpg', 4, 7, 5, 17),
+(10, 'img/10.jpg', 'Onion', 'Légume', '0.8', '2020-4-16', 20, 1, 'img_pub/10.jpg', 1, 5, 4, 18),
+(18, 'img/18.png', 'Fraise', 'Fruit', '1.8', '2020-4-16', 10, 1, 'img_pub/18.png', 2, 5, 5, 0),
+(12, 'img/12.jpg', 'Pastèque', 'Fruit', '0.450', '2020-4-16', 0, 0, 'img_pub/12.jpg', 0, 0, 0, 0),
+(11, 'img/11.jpg', 'Citron', 'Fruit', '3.500', '2020-4-16', 0, 0, 'img_pub/11.jpg', 0, 5, 0, 0),
+(25, 'img/25.jpg', 'Banane', 'Fruit', '3.900', '2020-4-16', 0, 0, 'img_pub/25.jpg', 0, 0, 0, 0),
+(26, 'img/26.jpg', 'Tomate', 'Fruit', '1.000', '2020-4-16', 0, 0, 'img_pub/26.jpg', 0, 0, 0, 6);
 
 -- --------------------------------------------------------
 

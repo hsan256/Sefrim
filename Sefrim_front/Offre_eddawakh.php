@@ -58,6 +58,18 @@ else{
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+<style>
+.bg-gradient-3 {
+  background: #88BE4C;
+  background: -webkit-linear-gradient(to center, #ff416c, #ff4b2b);
+  background: linear-gradient(to center, #ff416c, #ff4b2b);
+}
+
+.rounded {
+  border-radius: 1rem !important;
+}
+
+</style>
 <!-- BEGIN GOOGLE ANALYTICS CODEs -->
 
 </head>
@@ -728,6 +740,15 @@ else{
             </div>
           </div>
           <div class="category-products">
+            <div class="category-products">
+
+
+                      <div class="rounded bg-gradient-3 text-white shadow p-5 text-center mb-5">
+                          <p class="mb-0 font-weight-bold text-uppercase">Les Offres sont Limitées!</p>
+                          <div id="clock" class="countdown pt-4"></div>
+                      </div>
+
+            </div>
             <ul class="products-grid">
 
                  <?php foreach($products as $product) :  ?>
@@ -744,7 +765,6 @@ else{
                              <div class="box-inner">
                                <div class="product-detail-bnt"><a class="button detail-bnt" type="button"><span>Quick View</span></a></div>
                                  <div class="actions"><span class="add-to-links"><a href="#" class="link-wishlist" title="Add to Wishlist"><span>Add to Wishlist</span></a> <a href="#" class="link-compare add_to_compare" title="Add to Compare"><span>Add to Compare</span></a></span> </div>
-
                                </div>
                              </div>
                            </div>
@@ -771,7 +791,6 @@ else{
                              </div>
                            </div>
                          </div>
-
                        </li>
                  ';                  ?>
                  <?php endforeach;?>
@@ -1500,6 +1519,7 @@ else{
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-menu.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -1508,6 +1528,17 @@ else{
 		})
 	})
 </script>
+
+<script type="text/javascript">
+$('#clock').countdown('2020/6/8').on('update.countdown', function(event) {
+  var $this = $(this).html(event.strftime(''
+    + '<span class="h1 font-weight-bold">%D</span> Day%!d'
+    + '<span class="h1 font-weight-bold">%H</span> Hr'
+    + '<span class="h1 font-weight-bold">%M</span> Min'
+    + '<span class="h1 font-weight-bold">%S</span> Sec'));
+});
+</script>
+
 </body>
 
 <!-- Mirrored from themesground.com/flavours/version1/grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 Apr 2020 11:56:18 GMT -->

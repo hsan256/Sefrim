@@ -34,7 +34,7 @@
         `pr` = '$newprice' ,
         `tauxpromo` = '$tauxpromo' ,
         `oldpr` = '$oldprice' ,
-        `quantité_promo` = '$qt' ,
+        `quantite_promo` = '$qt' ,
         `quantite` = '$qt_dispo' ,
         `des` = '$des'
         WHERE pid = '$id'");
